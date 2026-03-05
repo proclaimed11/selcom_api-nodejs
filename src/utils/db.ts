@@ -1,29 +1,27 @@
-import path from 'path';
-import { fileURLToPath } from 'url';
-import fs from 'fs';
-import { dirname } from 'path';
+import { Pool } from "pg";
+import { config } from "../config/index.js";
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
+const pool = new Pool({
+  connectionString:config.dbUrl,  
+});
 
-export const getFilePath = async(filename:string) =>{
- return path.join(__dirname,'..',filename);
-}
-
-export const readNotes =async():Promise<string>=>{
-    try{
-        const filePath = await getFilePath('myNotes.txt');
-
-        const notes = fs.readFileSync(filePath,'utf16le');
-        return notes;
-    }catch(err){
-        console.error('Error reading notes:', err);
-        throw err;
+export const query=async<T=any>(text:string, params?: any[])=>{
+    const client = await pool.connect();
+    try {
+    const res = await client.query(text,params);
+    return res.rows as T[]; 
+    }finally{
+        client.release();
     }
 }
 
-export const appenddata = async(data:string):Promise<void>=>{
-    const filePath = await getFilePath('services.txt');
-    await fs.appendFileSync(filePath , data+'\n','utf16le');
+export const testDbConnection =async()=>{
+    try{
+    const client = await pool.connect();
+    console.log("Postgres connected successfully!")
+    client.release();
+    }catch(err){
+     console.error("Failed to connect to PostgresSQL:", err);
+     process.exit(1); 
+    }
 }
-
