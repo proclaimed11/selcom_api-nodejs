@@ -1,25 +1,24 @@
-import dotenv from 'dotenv';
-dotenv.config();
-
-import { DbConnTest } from './db/pool.js';
-import express from "express"
-import { config } from './config/index.js';
-import { testOp } from './db/test.js';
+import express from "express";
+import { config } from "./config/index.js";
+import { dbTestConn } from "./db/connection.js";
+import { dbTest } from "./db/db-test.js";
+import serviceRouter from "./routes/serviceRoutes.js";
 
 const app = express();
 
 app.use(express.json());
+app.use("/",serviceRouter);
 
-const PORT = config.port;
+const port = config.port;
 
-const ENV = config.environment
+const env= config.environment
 
-const initialize =async()=>{
-  await DbConnTest();
-  await testOp();
-  app.listen(PORT,()=>{
-  console.log(`Server running on port ${PORT}--->${ENV} 🚀🚀`)
-  });
+const initialize = async()=>{
+    await dbTestConn();
+    //await dbTest();
+    app.listen(port,()=>{
+      console.log(`Database running at : ${port}[${env}]`);
+    })
 }
 
-initialize().catch(console.error);
+initialize().catch(console.error)

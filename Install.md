@@ -7,7 +7,7 @@
 ## Install nodemon: ##
  Run the command "npm i nodemon"
 ## Create a tsconfig.json file: ## 
-Run "npx --init tsc"
+Run "npx tsc --init"
 ## Changes in the tsconfig.json: ##
      -"types": ["node","express"],
      -Uncomment the rootdir and       outdir sections
@@ -17,7 +17,7 @@ Run "npx --init tsc"
 ## Changes in the package.json ##:
      -"types":"module", // allows import ....
      - "scripts": {
-        "dev": "nodemon --watch src --ext ts --exec \"node --loader ts-node/esm ./src/index.ts\"", //allows running npm run dev in the src/index.ts
+        "dev": "nodemon --watch src --ext ts --exec \"tsx ./src/index.ts\"", //allows running npm run dev in the src/index.ts
         "start":"node dist/index.js",
         "test": "echo \"Error: no test specified\" && exit 1"
         },
@@ -30,7 +30,8 @@ Run "echo "console.log('Hello, Node.js with Typescript!');"> src/index.ts"
 ================= DATABASE CONNECTION ====================================
 
 ## install the pg(postgresql) and dotenv(.env) packages  and its typescript types ##
-Run "npm i pg dotenv" then "npm i --save-dev @types/pg"
+Run "npm i pg dotenv" also "npm i -D tsx" then "npm i --save-dev @types/pg"
 
-
+# to connect to the database use the following Url sample #
+~ postgresql://[username]:[password]@[host]:[port]/[database_name]
      
