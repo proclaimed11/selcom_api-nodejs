@@ -10,7 +10,7 @@
 Run "npx tsc --init"
 ## Changes in the tsconfig.json: ##
      -"types": ["node","express"],
-     -Uncomment the rootdir and       outdir sections
+     -Uncomment the rootdir and outdir sections
 ## Changes in the tsconfig.json: ##
        "include":["src/**/*"],
        "exclude":["node_modules","dist"]
