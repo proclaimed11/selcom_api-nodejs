@@ -1,5 +1,5 @@
 export interface ServiceRecord{
-    serviceName:string,
-    serviceCost:number,
-    serviceDate:string
+serviceName:string,
+serviceCost:number,
+serviceDate:string
 }
