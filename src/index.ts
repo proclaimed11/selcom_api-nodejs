@@ -1,22 +1,26 @@
 import express from "express";
-import {config} from "./config/index.js";
-import { DbTestConn } from "./db/conn.js";
-import serviceRouter from "./routes/services.routes.js";
-
+import { config } from "./config/index.js";
+import { dbTestConn } from "./db/conn.js";
+import ServiceRouter from "./routers/service.routers.js";
+import { errorHandler } from "./middlewares/errors.middleware.js";
 
 const app = express();
 
 app.use(express.json());
-app.use("/", serviceRouter)
 
-const PORT = config.PORT;
-const ENV = config.ENV;
+app.use("/", ServiceRouter);
+
+app.use(errorHandler);
+
+
+const PORT = config.port;
+const ENV = config.env;
 
 const initializeServer=()=>{
-    DbTestConn();
-    app.listen(PORT,()=>{
-        console.log(`${ENV} server is running on port ${PORT}`);
-    })
+dbTestConn();
+app.listen(PORT,()=>{
+console.log(`Server running on ${PORT}: ${ENV} database`);
+});
 }
 
-initializeServer();
+initializeServer()

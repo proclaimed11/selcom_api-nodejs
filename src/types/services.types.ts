@@ -1,5 +1,5 @@
-export interface Service{
-    serviceName:string,
-    servicePrice:number,
+export interface ServiceRecords{
+    service:string,
+    cost:number,
     date:string
 }
