@@ -142,7 +142,7 @@ deleteService=async(id:number):Promise<{id:number, message:string}>=>{
         DELETE FROM service_records
         WHERE id = $1
         RETURNING id`,
-    );
+    [id]);
 
     const deleteId = servicesDelete[0]?.id;
 

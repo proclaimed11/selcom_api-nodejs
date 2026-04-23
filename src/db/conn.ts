@@ -1,7 +1,7 @@
 import { Pool } from "pg";
 import { config } from "../config/index.js";
 
-const pool = new Pool({
+export const pool = new Pool({
     connectionString:config.DATABABSE_URL,
     max:20,
     idleTimeoutMillis:30000,
